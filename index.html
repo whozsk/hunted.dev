@@ -202,7 +202,7 @@
     .status-text .main {
       font-weight: 700;
       color: #fff;
-      text-shadow: 0 0 5px rgba(255, 0, 0, 0.5);
+      text-shadow: 0 0 5px rgba(255, 255, 255, 0.5)
     }
     .status-text .user {
       font-size: 0.9em;
@@ -803,18 +803,20 @@ hi whoz here
 
     const trailDots = [];
 
-    function addTrailDots(e) {
-      for (let i = 0; i < 2; i++) {
-        trailDots.push({
-          x: e.clientX,
-          y: e.clientY,
-          radius: Math.random() * 0.5 + 0.5,
-          opacity: 1,
-          vx: (Math.random() - 0.5) * 2,
-          vy: Math.random() * 2 + 1,
-          color: Math.random() < 0.5 ? 'rgba(255, 255, 255, ' : 'rgba(255, 0, 0, '
-        });
-      }
+function addTrailDots(e) {
+  for (let i = 0; i < 2; i++) {
+    trailDots.push({
+      x: e.clientX,
+      y: e.clientY,
+      radius: Math.random() * 0.5 + 0.5,
+      opacity: 1,
+      vx: (Math.random() - 0.5) * 2,
+      vy: Math.random() * 2 + 1,
+      color: 'rgba(255, 255, 255, '
+    });
+  }
+}
+
     }
 
     document.addEventListener('mousemove', addTrailDots);
@@ -888,7 +890,7 @@ hi whoz here
         starCtx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
         starCtx.fillStyle = star.color;
         starCtx.shadowBlur = 10;
-        starCtx.shadowColor = star.color.includes('255, 0, 0') ? '#f00' : '#fff';
+        starCtx.shadowColor = '#fff';
         starCtx.fill();
       });
 
