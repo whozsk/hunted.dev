@@ -812,7 +812,7 @@ hi whoz here
           opacity: 1,
           vx: (Math.random() - 0.5) * 2,
           vy: Math.random() * 2 + 1,
-          color: Math.random() < 0.5 ? 'rgba(255, 255, 255, ' : 'rgba(255, 0, 0, '
+          color: Math.random() < 0.5 ? 'rgba(255, 255, 255, ' : 'rgba(255, 255, 255, '
         });
       }
     }
@@ -858,7 +858,7 @@ hi whoz here
         orbitRadius: Math.random() * 20 + 10,
         speed: (Math.random() * 0.005 + 0.002) * (Math.random() < 0.5 ? 1 : -1),
         mouseInfluence: 0,
-        color: Math.random() < 0.3 ? 'rgba(255, 0, 0, 0.8)' : 'rgba(255, 255, 255, 0.8)'
+        color: Math.random() < 0.3 ? 'rgba(255, 255, 255, 0.8)' : 'rgba(255, 255, 255, 0.8)'
       });
     }
 
@@ -888,7 +888,7 @@ hi whoz here
         starCtx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
         starCtx.fillStyle = star.color;
         starCtx.shadowBlur = 10;
-        starCtx.shadowColor = star.color.includes('255, 0, 0') ? '#f00' : '#fff';
+        starCtx.shadowColor = star.color.includes('255, 255, 255') ? '#fff' : '#fff';
         starCtx.fill();
       });
 
