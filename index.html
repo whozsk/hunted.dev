@@ -700,108 +700,129 @@ hi whoz here
       trailCanvas.height = window.innerHeight;
     });
 
-    // Mouse movement for stars and trail dots
-    function handleMouseMove(e) {
-      mouseX = e.clientX;
-      mouseY = e.clientY;
-    }
-    document.addEventListener('mousemove', handleMouseMove);
 
-    const container = document.querySelector('.container');
-    container.addEventListener('mousemove', (e) => {
-      const rect = container.getBoundingClientRect();
-      const centerX = rect.left + rect.width / 2;
-      const centerY = rect.top + rect.height / 2;
-      const mouseX = e.clientX - centerX;
-      const mouseY = e.clientY - centerY;
-      const rotateX = (mouseY / rect.height) * -20;
-      const rotateY = (mouseX / rect.width) * 20;
-      container.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateX(-10px)`;
-    });
+// Mouse tracking
 
-    container.addEventListener('mouseleave', () => {
-      container.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateX(-10px)';
-    });
+let mouseX = 0;
+let mouseY = 0;
 
-    const profile = document.querySelector('.profile');
-    profile.addEventListener('mousemove', (e) => {
-      const rect = profile.getBoundingClientRect();
-      const centerX = rect.left + rect.width / 2;
-      const centerY = rect.top + rect.height / 2;
-      const mouseX = e.clientX - centerX;
-      const mouseY = e.clientY - centerY;
-      const rotateX = (mouseY / rect.height) * -20;
-      const rotateY = (mouseX / rect.width) * 20;
-      profile.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-    });
+function handleMouseMove(e) {
+  mouseX = e.clientX;
+  mouseY = e.clientY;
+}
+document.addEventListener('mousemove', handleMouseMove);
 
-    profile.addEventListener('mouseleave', () => {
-      profile.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg)';
-    });
 
-    const audioControls = document.querySelector('.audio-controls');
-    audioControls.addEventListener('mousemove', (e) => {
-      const rect = audioControls.getBoundingClientRect();
-      const centerX = rect.left + rect.width / 2;
-      const centerY = rect.top + rect.height / 2;
-      const mouseX = e.clientX - centerX;
-      const mouseY = e.clientY - centerY;
-      const rotateX = (mouseY / rect.height) * -20;
-      const rotateY = (mouseX / rect.width) * 20;
-      audioControls.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-    });
+// 3D tilt effects
 
-    audioControls.addEventListener('mouseleave', () => {
-      audioControls.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg)';
-    });
+const container = document.querySelector('.container');
+container.addEventListener('mousemove', (e) => {
+  const rect = container.getBoundingClientRect();
+  const centerX = rect.left + rect.width / 2;
+  const centerY = rect.top + rect.height / 2;
+  const mx = e.clientX - centerX;
+  const my = e.clientY - centerY;
+  const rotateX = (my / rect.height) * -20;
+  const rotateY = (mx / rect.width) * 20;
+  container.style.transform =
+    `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateX(-10px)`;
+});
 
-    const clickToEnter = document.querySelector('.click-to-enter');
-    clickToEnter.addEventListener('click', () => {
-      clickToEnter.classList.add('fading');
-      setTimeout(() => {
-        clickToEnter.remove();
-      }, 500);
-    });
+container.addEventListener('mouseleave', () => {
+  container.style.transform =
+    'perspective(1000px) rotateX(0deg) rotateY(0deg) translateX(-10px)';
+});
 
-    const grains = [];
-    const numGrains = 200;
+const profile = document.querySelector('.profile');
+profile.addEventListener('mousemove', (e) => {
+  const rect = profile.getBoundingClientRect();
+  const centerX = rect.left + rect.width / 2;
+  const centerY = rect.top + rect.height / 2;
+  const mx = e.clientX - centerX;
+  const my = e.clientY - centerY;
+  const rotateX = (my / rect.height) * -20;
+  const rotateY = (mx / rect.width) * 20;
+  profile.style.transform =
+    `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+});
 
-    for (let i = 0; i < numGrains; i++) {
-      grains.push({
-        x: Math.random() * grainCanvas.width,
-        y: Math.random() * grainCanvas.height,
-        radius: Math.random() * 1 + 0.5,
-        opacity: Math.random() * 0.3 + 0.1,
-        vx: (Math.random() - 0.5) * 0.5,
-        vy: (Math.random() - 0.5) * 0.5
-      });
-    }
+profile.addEventListener('mouseleave', () => {
+  profile.style.transform =
+    'perspective(1000px) rotateX(0deg) rotateY(0deg)';
+});
 
-    function animateGrains() {
-      console.log('Animating grains');
-      grainCtx.clearRect(0, 0, grainCanvas.width, grainCanvas.height);
+const audioControls = document.querySelector('.audio-controls');
+audioControls.addEventListener('mousemove', (e) => {
+  const rect = audioControls.getBoundingClientRect();
+  const centerX = rect.left + rect.width / 2;
+  const centerY = rect.top + rect.height / 2;
+  const mx = e.clientX - centerX;
+  const my = e.clientY - centerY;
+  const rotateX = (my / rect.height) * -20;
+  const rotateY = (mx / rect.width) * 20;
+  audioControls.style.transform =
+    `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+});
 
-      grains.forEach(grain => {
-        grain.x += grain.vx;
-        grain.y += grain.vy;
+audioControls.addEventListener('mouseleave', () => {
+  audioControls.style.transform =
+    'perspective(1000px) rotateX(0deg) rotateY(0deg)';
+});
 
-        if (grain.x < 0 || grain.x > grainCanvas.width) grain.vx *= -1;
-        if (grain.y < 0 || grain.y > grainCanvas.height) grain.vy *= -1;
 
-        grain.opacity = Math.max(0.1, Math.min(0.4, grain.opacity + (Math.random() - 0.5) * 0.02));
+// Click to enter
 
-        grainCtx.beginPath();
-        grainCtx.arc(grain.x, grain.y, grain.radius, 0, Math.PI * 2);
-        grainCtx.fillStyle = `rgba(255, 255, 255, ${grain.opacity})`;
-        grainCtx.fill();
-      });
+const clickToEnter = document.querySelector('.click-to-enter');
+clickToEnter.addEventListener('click', () => {
+  clickToEnter.classList.add('fading');
+  setTimeout(() => clickToEnter.remove(), 500);
+});
 
-      requestAnimationFrame(animateGrains);
-    }
 
-    animateGrains();
+// Grain effect
 
-    const trailDots = [];
+const grains = [];
+const numGrains = 200;
+
+for (let i = 0; i < numGrains; i++) {
+  grains.push({
+    x: Math.random() * grainCanvas.width,
+    y: Math.random() * grainCanvas.height,
+    radius: Math.random() * 1 + 0.5,
+    opacity: Math.random() * 0.3 + 0.1,
+    vx: (Math.random() - 0.5) * 0.5,
+    vy: (Math.random() - 0.5) * 0.5
+  });
+}
+
+function animateGrains() {
+  grainCtx.clearRect(0, 0, grainCanvas.width, grainCanvas.height);
+
+  grains.forEach(grain => {
+    grain.x += grain.vx;
+    grain.y += grain.vy;
+
+    if (grain.x < 0 || grain.x > grainCanvas.width) grain.vx *= -1;
+    if (grain.y < 0 || grain.y > grainCanvas.height) grain.vy *= -1;
+
+    grain.opacity = Math.max(
+      0.1,
+      Math.min(0.4, grain.opacity + (Math.random() - 0.5) * 0.02)
+    );
+
+    grainCtx.beginPath();
+    grainCtx.arc(grain.x, grain.y, grain.radius, 0, Math.PI * 2);
+    grainCtx.fillStyle = `rgba(255, 255, 255, ${grain.opacity})`;
+    grainCtx.fill();
+  });
+
+  requestAnimationFrame(animateGrains);
+}
+animateGrains();
+
+// Mouse trail dots (ALL WHITE)
+
+const trailDots = [];
 
 function addTrailDots(e) {
   for (let i = 0; i < 2; i++) {
@@ -817,87 +838,88 @@ function addTrailDots(e) {
   }
 }
 
+document.addEventListener('mousemove', addTrailDots);
+
+function animateTrail() {
+  trailCtx.clearRect(0, 0, trailCanvas.width, trailCanvas.height);
+
+  for (let i = trailDots.length - 1; i >= 0; i--) {
+    const dot = trailDots[i];
+    dot.x += dot.vx;
+    dot.y += dot.vy;
+    dot.opacity -= 0.02;
+
+    if (dot.opacity <= 0) {
+      trailDots.splice(i, 1);
+      continue;
     }
 
-    document.addEventListener('mousemove', addTrailDots);
+    trailCtx.beginPath();
+    trailCtx.arc(dot.x, dot.y, dot.radius, 0, Math.PI * 2);
+    trailCtx.fillStyle = `${dot.color}${dot.opacity})`;
+    trailCtx.fill();
+  }
 
-    function animateTrail() {
-      console.log('Animating trail dots');
-      trailCtx.clearRect(0, 0, trailCanvas.width, trailCanvas.height);
+  requestAnimationFrame(animateTrail);
+}
+animateTrail();
+    
+// Stars (ALL WHITE)
+    
+const stars = [];
+const numStars = 50;
 
-      trailDots.forEach((dot, index) => {
-        dot.x += dot.vx;
-        dot.y += dot.vy;
-        dot.opacity -= 0.02;
+for (let i = 0; i < numStars; i++) {
+  stars.push({
+    x: Math.random() * starCanvas.width,
+    y: Math.random() * starCanvas.height,
+    originX: Math.random() * starCanvas.width,
+    originY: Math.random() * starCanvas.height,
+    radius: Math.random() * 2 + 1,
+    angle: Math.random() * Math.PI * 2,
+    orbitRadius: Math.random() * 20 + 10,
+    speed: (Math.random() * 0.005 + 0.002) * (Math.random() < 0.5 ? 1 : -1),
+    mouseInfluence: 0,
+    color: 'rgba(255, 255, 255, 0.8)'
+  });
+}
 
-        if (dot.opacity <= 0) {
-          trailDots.splice(index, 1);
-          return;
-        }
+function animateStars() {
+  starCtx.clearRect(0, 0, starCanvas.width, starCanvas.height);
 
-        trailCtx.beginPath();
-        trailCtx.arc(dot.x, dot.y, dot.radius, 0, Math.PI * 2);
-        trailCtx.fillStyle = `${dot.color}${dot.opacity})`;
-        trailCtx.fill();
-      });
+  stars.forEach(star => {
+    const dx = mouseX - star.originX;
+    const dy = mouseY - star.originY;
+    const distance = Math.sqrt(dx * dx + dy * dy);
+    const maxDistance = 300;
 
-      requestAnimationFrame(animateTrail);
-    }
+    star.mouseInfluence =
+      distance < maxDistance
+        ? (1 - distance / maxDistance) * 0.02
+        : 0;
 
-    animateTrail();
+    star.angle += star.speed + star.mouseInfluence;
 
-    const stars = [];
-    const numStars = 50;
+    star.x = star.originX + Math.cos(star.angle) * star.orbitRadius;
+    star.y = star.originY + Math.sin(star.angle) * star.orbitRadius;
 
-    for (let i = 0; i < numStars; i++) {
-      stars.push({
-        x: Math.random() * starCanvas.width,
-        y: Math.random() * starCanvas.height,
-        originX: Math.random() * starCanvas.width,
-        originY: Math.random() * starCanvas.height,
-        radius: Math.random() * 2 + 1,
-        angle: Math.random() * Math.PI * 2,
-        orbitRadius: Math.random() * 20 + 10,
-        speed: (Math.random() * 0.005 + 0.002) * (Math.random() < 0.5 ? 1 : -1),
-        mouseInfluence: 0,
-        color: Math.random() < 0.3 ? 'rgba(255, 0, 0, 0.8)' : 'rgba(255, 255, 255, 0.8)'
-      });
-    }
+    if (star.x < 0) star.x = starCanvas.width;
+    if (star.x > starCanvas.width) star.x = 0;
+    if (star.y < 0) star.y = starCanvas.height;
+    if (star.y > starCanvas.height) star.y = 0;
 
-    function animateStars() {
-      console.log('Animating stars');
-      starCtx.clearRect(0, 0, starCanvas.width, starCanvas.height);
+    starCtx.beginPath();
+    starCtx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+    starCtx.fillStyle = star.color;
+    starCtx.shadowBlur = 10;
+    starCtx.shadowColor = '#fff';
+    starCtx.fill();
+  });
 
-      stars.forEach(star => {
-        const dx = mouseX - star.originX;
-        const dy = mouseY - star.originY;
-        const distance = Math.sqrt(dx * dx + dy * dy);
-        const maxDistance = 300;
+  requestAnimationFrame(animateStars);
+}
+animateStars();
 
-        star.mouseInfluence = distance < maxDistance ? (1 - distance / maxDistance) * 0.02 : 0;
-
-        star.angle += star.speed + star.mouseInfluence;
-
-        star.x = star.originX + Math.cos(star.angle) * star.orbitRadius;
-        star.y = star.originY + Math.sin(star.angle) * star.orbitRadius;
-
-        if (star.x < 0) star.x = starCanvas.width;
-        if (star.x > starCanvas.width) star.x = 0;
-        if (star.y < 0) star.y = starCanvas.height;
-        if (star.y > starCanvas.height) star.y = 0;
-
-        starCtx.beginPath();
-        starCtx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
-        starCtx.fillStyle = star.color;
-        starCtx.shadowBlur = 10;
-        starCtx.shadowColor = '#fff';
-        starCtx.fill();
-      });
-
-      requestAnimationFrame(animateStars);
-    }
-
-    animateStars();
 
     const audio = document.getElementById('backgroundMusic');
     const volumeSlider = document.getElementById('volumeSlider');
